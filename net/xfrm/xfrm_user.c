@@ -2193,7 +2193,7 @@ static int xfrm_add_acquire(struct sk_buff *skb, struct nlmsghdr *nlh,
 		goto free_state;
 	err = verify_sec_ctx_len(attrs);
 	if (err)
-		goto bad_policy;
+		goto free_state;
 
 	/*   build an XP */
 	xp = xfrm_policy_construct(net, &ua->policy, attrs, &err);
@@ -2225,8 +2225,6 @@ static int xfrm_add_acquire(struct sk_buff *skb, struct nlmsghdr *nlh,
 
 	return 0;
 
-bad_policy:
-	WARN(1, "BAD policy passed\n");
 free_state:
 	kfree(x);
 nomem:
